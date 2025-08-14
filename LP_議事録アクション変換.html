@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActionFlow - 会議を、即座に行動へ | AI議事録→タスク自動変換</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* ヒーローセクション */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #fff;
+            color: #667eea;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        
+        /* 問題提起セクション */
+        .problem {
+            background: #f8f9fa;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+        
+        .pain-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .pain-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .pain-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .pain-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+        
+        /* 解決策セクション */
+        .solution {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .feature {
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2em;
+            color: white;
+        }
+        
+        .feature h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        /* 仕組みセクション */
+        .how-it-works {
+            background: #f8f9fa;
+            padding: 80px 20px;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        /* 実績セクション */
+        .results {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        /* 証拠セクション */
+        .evidence {
+            background: #f8f9fa;
+            padding: 80px 20px;
+        }
+        
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-quote {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .testimonial-company {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        /* 料金セクション */
+        .pricing {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .pricing-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            background: white;
+        }
+        
+        .pricing-card.featured {
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+        
+        .pricing-card .badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        
+        .price {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+        
+        .price-unit {
+            font-size: 0.5em;
+            color: #666;
+        }
+        
+        /* FAQ セクション */
+        .faq {
+            background: #f8f9fa;
+            padding: 80px 20px;
+        }
+        
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .faq-answer {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        /* CTA セクション */
+        .final-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        
+        .final-cta h2 {
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .final-cta .cta-button {
+            background: white;
+            color: #667eea;
+            font-size: 1.3em;
+            padding: 20px 50px;
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2em;
+            }
+            
+            h2 {
+                font-size: 1.8em;
+            }
+            
+            .steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <div class="container">
+            <h1>会議を、即座に行動へ</h1>
+            <p class="subtitle">議事録から実行可能なタスクまで、AIが20秒で自動変換</p>
+            <p style="margin-bottom: 40px; font-size: 1.1em;">
+                担当者・期限・優先度まで自動付与。Jira/Notion/Asana/Slackに即時同期
+            </p>
+            <a href="#trial" class="cta-button">1週間無料で試す →</a>
+        </div>
+    </section>
+
+    <!-- 問題提起セクション -->
+    <section class="problem">
+        <div class="container">
+            <h2>こんな状況、心当たりありませんか？</h2>
+            <div class="pain-points">
+                <div class="pain-card">
+                    <div class="icon">⏰</div>
+                    <h3>深夜0時、まだオフィス</h3>
+                    <p>冷めたコーヒーの匂い。Slackは未読100+。議事録はメモと録音がバラバラ。上司から「結局誰がやるの？」の通知音が鳴るたび、胃がきゅっと痛む。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="icon">😰</div>
+                    <h3>月曜朝の重い空気</h3>
+                    <p>定例会議で机の上の付箋は剥がれ、誰も期限を言い切れない。先週の決定事項は実行されず、同じ議論の繰り返し。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="icon">💔</div>
+                    <h3>レビュー直前の絶望</h3>
+                    <p>顧客とのレビュー直前、Excelのタスク表が最新でないことに気づく。手が汗ばみ、必死で各メンバーに確認を取る。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 解決策セクション -->
+    <section class="solution">
+        <div class="container">
+            <h2>ActionFlowが、その悩みを解決します</h2>
+            <p style="text-align: center; font-size: 1.2em; color: #666; margin-bottom: 50px;">
+                会議の議事録（音声/テキスト）をAIが読み取り、<br>
+                担当者・期限・優先度まで付いた実行可能なアクションプランに自動変換
+            </p>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📋</div>
+                    <h3>自動構造化</h3>
+                    <p>決定事項/課題/ToDo/依存関係を抽出し、RACIと期限を自動付与</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔗</div>
+                    <h3>ワンクリック連携</h3>
+                    <p>Asana/Jira/Notion/Googleカレンダー/Slackに即時同期</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>日本語最適化</h3>
+                    <p>会議特有の曖昧表現からでも明確なアクションを生成</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>セキュリティ重視</h3>
+                    <p>個人情報マスキング、監査ログ、SSO/SCIM対応</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 仕組みセクション -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>導入は驚くほど簡単</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>録音・入力</h3>
+                    <p>会議の音声録音またはテキスト議事録をアップロード</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>AI解析</h3>
+                    <p>発言者・トピックを分割し、決定事項とToDoを抽出</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>タスク生成</h3>
+                    <p>担当者・期限・優先度・依存関係を自動付与</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>ツール同期</h3>
+                    <p>既存のプロジェクト管理ツールに自動連携</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 実績セクション -->
+    <section class="results">
+        <div class="container">
+            <h2>導入企業の実績</h2>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">70%</span>
+                    <span class="stat-label">会議後処理時間の削減</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">80%</span>
+                    <span class="stat-label">タスク抜け漏れの減少</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">+8.4pt</span>
+                    <span class="stat-label">営業成約率の向上</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">60分/週</span>
+                    <span class="stat-label">準備時間の削減</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 証拠セクション -->
+    <section class="evidence">
+        <div class="container">
+            <h2>導入企業の声</h2>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "BtoB SaaS営業チームで導入後、アクション抜け漏れが週15件から3件に激減。成約率が8.4ポイント向上し、売上が大幅に改善しました。"
+                    </p>
+                    <p class="testimonial-author">田中 様</p>
+                    <p class="testimonial-company">SaaS企業 営業部長</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "開発チームでスプリント移行漏れが0件に。レトロスペクティブの準備時間が週60分削減され、エンジニアが開発に集中できるようになりました。"
+                    </p>
+                    <p class="testimonial-author">佐藤 様</p>
+                    <p class="testimonial-company">テック企業 開発マネージャー</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "初回設定はテンプレートを選ぶだけで、その日から使えました。会議後の作業が本当に楽になり、チーム全体の生産性が向上しています。"
+                    </p>
+                    <p class="testimonial-author">鈴木 様</p>
+                    <p class="testimonial-company">コンサルティング会社 PMO</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ セクション -->
+    <section class="faq">
+        <div class="container">
+            <h2>よくある質問</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">Q: AIの誤読が心配です</div>
+                    <div class="faq-answer">
+                        A: 変更履歴と引用元行へのジャンプ機能、信頼スコアの表示により、すべての抽出内容を検証可能です。誤りがあった場合は簡単に修正でき、AIが学習して精度が向上します。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q: 情報漏洩のリスクはありませんか？</div>
+                    <div class="faq-answer">
+                        A: データ地域選択、エンドツーエンド暗号化、機密情報用のオンプレミス運用プランをご用意。ISO27001準拠のセキュリティ体制で、お客様のデータを守ります。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q: 設定が大変そうです</div>
+                    <div class="faq-answer">
+                        A: 初回はテンプレートを選ぶだけで即日稼働。以降はAIが自動で最適化していきます。既存のツールとの連携も、APIキーを入力するだけで完了します。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q: 本当に効果がありますか？</div>
+                    <div class="faq-answer">
+                        A: 20社のPoCで会議後処理時間が中央値65%削減という実績があります。ダッシュボードで時間削減効果と進捗を可視化できるため、導入効果を数値で確認いただけます。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 料金セクション -->
+    <section class="pricing">
+        <div class="container">
+            <h2>料金プラン</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>スタータープラン</h3>
+                    <div class="price">
+                        ¥30,000
+                        <span class="price-unit">/月</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; line-height: 2;">
+                        <li>✓ ユーザー数: 〜10名</li>
+                        <li>✓ 月間会議: 〜50回</li>
+                        <li>✓ 基本連携: 3ツールまで</li>
+                        <li>✓ メールサポート</li>
+                    </ul>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="badge">おすすめ</div>
+                    <h3>ビジネスプラン</h3>
+                    <div class="price">
+                        ¥80,000
+                        <span class="price-unit">/月</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; line-height: 2;">
+                        <li>✓ ユーザー数: 〜50名</li>
+                        <li>✓ 月間会議: 無制限</li>
+                        <li>✓ 全ツール連携対応</li>
+                        <li>✓ 優先サポート</li>
+                        <li>✓ カスタムテンプレート</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h3>エンタープライズ</h3>
+                    <div class="price">
+                        お問い合わせ
+                    </div>
+                    <ul style="list-style: none; padding: 0; line-height: 2;">
+                        <li>✓ ユーザー数: 無制限</li>
+                        <li>✓ オンプレミス対応</li>
+                        <li>✓ SSO/SCIM連携</li>
+                        <li>✓ 専任サポート</li>
+                        <li>✓ SLA保証</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 最終CTA -->
+    <section class="final-cta" id="trial">
+        <div class="container">
+            <h2>今すぐ会議の生産性を変革しませんか？</h2>
+            <p style="font-size: 1.3em; margin-bottom: 40px;">
+                1週間の無料トライアルで、効果を実感してください
+            </p>
+            <a href="#" class="cta-button">無料トライアルを開始 →</a>
+            <p style="margin-top: 20px; opacity: 0.9;">
+                クレジットカード不要・即日利用開始・いつでもキャンセル可能
+            </p>
+        </div>
+    </section>
+</body>
+</html>
